@@ -9,7 +9,8 @@ class App extends Component {
             {name: 'red', age: 38},
             {name: 'devils', age: 28}
         ],
-        other: 'another value'
+        other: 'another value',
+        showPerson: false
     }
 
     switchName = (newName) => {
@@ -32,6 +33,10 @@ class App extends Component {
             ]
         })
     }
+    togglePersonsHandler = () => {
+        const doesShow = this.state.showPerson;
+        this.setState({showPerson: !doesShow});
+    }
 
     render() {
         const style = {
@@ -48,16 +53,26 @@ class App extends Component {
                 <p> Having something</p>
                 <button
                     style={style}
-                    onClick={this.switchName.bind(this, 'new Name edit')}>Switch</button>
+                    onClick={this.togglePersonsHandler}>Toggle
+                </button>
+                {
+                    this.state.showPerson === true ?
+                        <div>
+                            <Person
+                                name={this.state.person[0].name}
+                                age={this.state.person[0].age}/>
+                            <Person
+                                click={this.switchName.bind(this, 'new Name edit')}
+                                name={this.state.person[1].name}
+                                age={this.state.person[1].age}
+                                changed={this.nameChangeHandler}
+                            > My hobbie is driving</Person>
+                            <Person
+                                name={this.state.person[2].name}
+                                age={this.state.person[2].age}/>
+                        </div> : null
+                }
 
-                <Person name={this.state.person[0].name} age={this.state.person[0].age}/>
-                <Person
-                    click={this.switchName.bind(this, 'new Name edit')}
-                    name={this.state.person[1].name}
-                    age={this.state.person[1].age}
-                    changed={this.nameChangeHandler}
-                > My hobbie is driving</Person>
-                <Person name={this.state.person[2].name} age={this.state.person[2].age}/>
             </div>
         );
     }
